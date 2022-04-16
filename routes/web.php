@@ -22,7 +22,11 @@ Route::get('/admin',[AdminController::class,'index']);
 Route::get('/dashboard',[AdminController::class,'showDashboard']);
 Route::post('/admin-dashboard',[AdminController::class,'dashboard']);
 Route::get('/logout',[AdminController::class,'logout']);
-Route::get('/registrations',[AdminController::class,'signUp']);
-Route::post('/registrations',[AdminController::class,'postSignUp']);
+Route::get('/registration',[AdminController::class,'signUp']);
+Route::post('/registration',[AdminController::class,'postSignUp']);
+
+
+
+
 
 

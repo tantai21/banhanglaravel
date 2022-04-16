@@ -7,7 +7,7 @@ use App\Http\Requests;
 use Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator; 
-use App\User;
+use App\Models\User;
 session_start();
 class AdminController extends Controller
 {
@@ -42,32 +42,34 @@ class AdminController extends Controller
       return view(admin_signup);
     }
     public function postSignUp(Request $request){
-      $validator = Validator::make($request->all(),[
-         'name'=>'required|max:30|alpha',
-         'email'=>'required|email',
-         'phone'=>'required|numeric|min:11',
-         'password'=>'required|confirmed|min:6|max:16',
-
-      ]);
-      if($validator->fails()){
-         return redirect()->back()
-         ->withErrors($validator)
-         ->withInput();
-      }
-      $user = DB::table('tbl_admin')->where('admin_email',$request->email)->first();
-      if(!$user){
+     $this->validate($request,[
+        'name'=>'required|min:3',
+        'email'=>'required|email|unique:users,email',
+        'phone'=>'required|min:6',
+        'password'=>'required|min:3|max:32',
+     ],[
+        'name.required'=>'Bạn chưa nhập Name',
+        'name.min'=>'Tối thiểu 3 kí tự',
+        'email.required'=>'Bạn chưa nhập Email',
+        'email.email'=>'Bạn chưa định dạng email ',
+        'email.unique'=>'email đã tồn tại ',
+        'phone.required'=>'Bạn chưa nhập phone',
+        'phone.min'=>'Tối thiểu 6 kí tự',
+        'password.required'=>'Bạn chưa nhập password',
+        'password.min'=>'Tối thiểu 3 kí tự',
+        'password.max'=>'Tối đa 32 kí tự',
+     ]);
+    
+    
          $newUser = new User();
-         $newUser->admin_name = $request->name;
-         $newUser->admin_email = $request->email;
-         $newUser->admin_phone = $request->phone;
-         $newUser->admin_password = $request->name;
+         $newUser->name = $request->name;
+         $newUser->email = $request->email;
+         $newUser->phone = $request->phone;
+         $newUser->password = $request->password;
          $newUser->save();
-         // return redirect()->route('admin_signup')->with('message','Bạn đã tạo thành công tài khoản');
+        
          return redirect('sighup')->with('message','Bạn đã tạo thành công tài khoản');
-      }
-      // else{
-      //    return redirect()->route('admin_login')->with('message','Tài Khoản đã tồn tại');
+     
+   }
 
-      // }
-    }
 }
