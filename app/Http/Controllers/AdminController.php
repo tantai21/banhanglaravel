@@ -59,15 +59,12 @@ class AdminController extends Controller
         'password.min'=>'Tối thiểu 3 kí tự',
         'password.max'=>'Tối đa 32 kí tự',
      ]);
-    
-    
          $newUser = new User();
          $newUser->name = $request->name;
          $newUser->email = $request->email;
          $newUser->phone = $request->phone;
          $newUser->password = $request->password;
-         $newUser->save();
-        
+         $newUser->save();     
          return redirect('sighup')->with('message','Bạn đã tạo thành công tài khoản');
      
    }

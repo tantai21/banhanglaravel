@@ -60,7 +60,7 @@
                 <i class="fa-solid fa-angle-down"></i>
               </li>
               <li class="header__navbar-item">
-                <a href="#" class="header__navbar-item-link--strong">Đăng Ký</a>
+                <a href="{{URL::to('/registration')}}" class="header__navbar-item-link--strong">Đăng Ký</a>
               </li>
               <li class="header__navbar-item">
                 <a href="{{URL::to('/admin')}}" class="header__navbar-item-link"> Đăng Nhập</a>
